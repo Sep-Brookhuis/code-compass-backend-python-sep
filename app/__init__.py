@@ -3,13 +3,16 @@ from flask_cors import CORS
 from .config import Config
 from .controllers.login_controller import new_blueprint
 from .errors import BadRequest, Unauthorized, Forbidden
-from app.database.models import all_models
 
 
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
     app.register_blueprint(new_blueprint)
+
+    # Initialize database
+    from app.database import init_db
+    init_db()
 
     CORS(
         app,
