@@ -1,8 +1,8 @@
-from flask import jsonify
 from app.errors import Unauthorized
 from app.services.login.authentication_service import Authentication
 from app.services.login.role_check_service import RoleCheck
 from app.services.login.validator_service import Validator
+from app.errors.Unauthorized import Unauthorized
 
 class LoginService:
     def __init__(self):
@@ -21,9 +21,12 @@ class LoginService:
             raise Unauthorized("Invalid email or password")
 
         # check user role
-        user_role = self.role_check.find_user(user_id)
+        user_role = self.role_check.find_user_role(user_id)
+        user_role = user_role.upper()
 
+        # if user role is ADMIN
 
+        # if user role is not admin
 
 
         return "siiiii maatje!!!!"

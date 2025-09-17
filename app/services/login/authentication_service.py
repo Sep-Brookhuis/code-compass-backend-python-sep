@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from supabase import create_client
-from app import errors
+from app.errors.Unauthorized import Unauthorized
 
 load_dotenv()
 
@@ -22,7 +22,7 @@ class Authentication:
                 "password": password
             })
         except Exception as e:
-            raise errors.Unauthorized(f"Supabase auth failed: {str(e)}")
+            raise Unauthorized(f"Supabase auth failed: {str(e)}")
 
         if response.session:
             return response.session.access_token, response.user.id

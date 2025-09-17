@@ -1,4 +1,5 @@
-from app.database.models.models import Subtopics, Topics
-from app.database.models.profile import Profile
+from app.database.models.profiles import Profiles
+from app.database.models.subtopics import Subtopics
+from app.database.models.topics import Topics
 
-all_models = [Profile, Topics, Subtopics]
+all_models = [Profiles, Topics, Subtopics]

@@ -1,8 +1,11 @@
-from flask import Flask, jsonify
-from flask_cors import CORS
+from flask import Flask
 from .config import Config
 from .controllers.login_controller import new_blueprint
-from .errors import BadRequest, Unauthorized, Forbidden
+from .cors import init_cors
+from .errors.BadRequest import BadRequest
+from .errors.Forbidden import Forbidden
+from .errors.Unauthorized import Unauthorized
+from .errors.handlers import init_error_handlers
 
 
 def create_app() -> Flask:
@@ -14,22 +17,10 @@ def create_app() -> Flask:
     from app.database import init_db
     init_db()
 
-    CORS(
-        app,
-        origins=app.config["FRONTEND_ORIGIN"],
-        supports_credentials=True,
-    )
+    # Configure CORS
+    init_cors(app)
 
-    @app.errorhandler(BadRequest)
-    def handle_bad_request(err):
-        return jsonify({"ok": False, "error": str(err) or "Bad request"}), 400
-
-    @app.errorhandler(Unauthorized)
-    def handle_unauthorized(err):
-        return jsonify({"ok": False, "error": str(err) or "Unauthorized"}), 401
-
-    @app.errorhandler(Forbidden)
-    def handle_forbidden(err):
-        return jsonify({"ok": False, "error": str(err) or "Forbidden"}), 403
+    # Error handlers
+    init_error_handlers(app)
 
     return app
