@@ -1,14 +1,17 @@
 from app.errors import Unauthorized
 from app.services.login.authentication_service import Authentication
 from app.services.login.role_check_service import RoleCheck
+from app.services.login.set_cookie import CookieService
 from app.services.login.validator_service import Validator
 from app.errors.Unauthorized import Unauthorized
+from flask import make_response, jsonify
 
 class LoginService:
     def __init__(self):
         self.validator = Validator()
         self.authenticator = Authentication()
         self.role_check = RoleCheck()
+        self.cookie_response = CookieService()
 
     def login(self):
         # validate input and store validates data
@@ -24,10 +27,12 @@ class LoginService:
         user_role = self.role_check.find_user_role(user_id)
         user_role = user_role.upper()
 
-        # if user role is ADMIN
+        # create response
+        response = make_response(jsonify({"ok": "True"}), 200)
 
-        # if user role is not admin
+        # link cookie to response
+        final_response = self.cookie_response.set_cookie(response,jwt_key)
 
-
-        return "siiiii maatje!!!!"
+        # return total respons to frontend
+        return final_response
 

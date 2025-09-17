@@ -9,5 +9,5 @@ class LoginController:
         return self.login_service.login()
 
 controller = LoginController()
-new_blueprint = Blueprint("blueprint", __name__, url_prefix="/api")
-new_blueprint.add_url_rule("/login", "login", controller.route_login, methods=["POST"])
+login_blueprint = Blueprint("login_blueprint", __name__, url_prefix="/api")
+login_blueprint.add_url_rule("/login", "login", controller.route_login, methods=["POST"])
