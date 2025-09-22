@@ -21,8 +21,8 @@ class Authentication:
                 "email": email,
                 "password": password
             })
-        except Exception as e:
-            raise Unauthorized(f"Supabase auth failed: {str(e)}")
+        except:
+            raise Unauthorized(f"Supabase auth failed")
 
         if response.session:
             return response.session.access_token, response.user.id
