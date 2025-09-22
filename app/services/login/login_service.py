@@ -1,4 +1,5 @@
 from app.errors import Unauthorized
+from app.errors.Forbidden import Forbidden
 from app.services.login.authentication_service import Authentication
 from app.services.login.role_check_service import RoleCheck
 from app.services.login.set_cookie import CookieService
@@ -26,6 +27,10 @@ class LoginService:
         # check user role
         user_role = self.role_check.find_user_role(user_id)
         user_role = user_role.upper()
+
+        # if user role is trainee raise 403 error
+        if user_role == "TRAINEE":
+            raise Forbidden("Admin access required")
 
         # create response
         response = make_response(jsonify({"ok": "True"}), 200)
