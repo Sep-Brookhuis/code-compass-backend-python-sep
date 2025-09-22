@@ -1,5 +1,6 @@
 from flask import Flask
 from .config import Config
+from .controllers.create_user_controller import create_user_blueprint
 from .controllers.login_controller import login_blueprint
 from .controllers.logout_controller import logout_blueprint
 from .controllers.profile_info_controller import profile_info_blueprint
@@ -13,6 +14,7 @@ def create_app() -> Flask:
     app.register_blueprint(login_blueprint)
     app.register_blueprint(logout_blueprint)
     app.register_blueprint(profile_info_blueprint)
+    app.register_blueprint(create_user_blueprint)
 
     # Initialize database
     from app.database import init_db
