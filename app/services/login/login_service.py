@@ -7,6 +7,7 @@ from app.services.login.validator_service import Validator
 from app.errors.Unauthorized import Unauthorized
 from flask import make_response, jsonify
 
+
 class LoginService:
     def __init__(self):
         self.validator = Validator()
@@ -29,8 +30,8 @@ class LoginService:
         user_role = user_role.upper()
 
         # if user role is trainee raise 403 error
-        if user_role == "TRAINEE":
-            raise Forbidden("Admin access required")
+        # if user_role == "TRAINEE":
+        #     raise Forbidden("Admin access required")
 
         # create response
         response = make_response(jsonify({"ok": "True"}), 200)
@@ -38,6 +39,6 @@ class LoginService:
         # link cookie to response
         final_response = self.cookie_response.set_cookie(response,jwt_key)
 
-        # return total respons to frontend
+        # return total response to frontend
         return final_response
 
