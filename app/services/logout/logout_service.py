@@ -6,6 +6,11 @@ class LogoutService:
 
     def logout(self):
         response = make_response(jsonify({"ok": True, "message": "Logged out"}))
-        response.delete_cookie("jwt", path="/", httponly=True,  secure=True,  samesite="None")
+        response.delete_cookie(
+            "jwt",
+            httponly=True,
+            secure=False,
+            samesite="Lax",
+        )
         return response
 
