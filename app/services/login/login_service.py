@@ -29,12 +29,17 @@ class LoginService:
         user_role = self.role_check.find_user_role(user_id)
         user_role = user_role.upper()
 
-        # if user role is trainee raise 403 error
-        # if user_role == "TRAINEE":
-        #     raise Forbidden("Admin access required")
+        # create response JSON
+        response_body = {
+            "ok": True,
+            "user": {
+                "displayName": "User",
+                "role": user_role,
+            },
+        }
 
         # create response
-        response = make_response(jsonify({"ok": "True"}), 200)
+        response = make_response(jsonify(response_body), 200)
 
         # link cookie to response
         final_response = self.cookie_response.set_cookie(response,jwt_key)
